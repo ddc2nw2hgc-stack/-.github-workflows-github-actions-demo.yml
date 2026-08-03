@@ -1,18 +1,32 @@
-name: Build iOS App
-on: [push]
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [ "main" ]
+
 jobs:
   build:
-  runs-on: macos-latest
-  steps:
-    - uses: actions/checkout@v3
-    - name: Build app
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Xcode
+      run: sudo xcode-select -s /Applications/Xcode.app
+
+    - name: Build and Archive
       run: |
-        xcodebuild -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build SYMROOT=$(pwd)/build
+        # Сборка проекта без подписки (для симулятора или общей компиляции)
+        xcodebuild -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
+        
+        # Создание структуры Payload для IPA
         mkdir Payload
-        mv build/Release-iphoneos/*.app Payload/
+        cp -R build/Release-iphoneos/*.app Payload/
         zip -r fever_free-IOS.ipa Payload
-    - name: Upload IPA
+
+    - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: fever_free-IOS
+        name: fever_free-IOS-ipa
         path: fever_free-IOS.ipa
