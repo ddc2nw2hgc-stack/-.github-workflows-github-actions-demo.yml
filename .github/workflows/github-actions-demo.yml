@@ -21,7 +21,7 @@ jobs:
 
     - name: Build and Archive
       run: |
-        xcodebuild -project "fever_free_IOS.xcodeproj" -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
+        xcodebuild -project "fever_free_IOS.xcodeproj" -scheme "fever_free_IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
         
         mkdir Payload
         cp -R build/Release-iphoneos/*.app Payload/
