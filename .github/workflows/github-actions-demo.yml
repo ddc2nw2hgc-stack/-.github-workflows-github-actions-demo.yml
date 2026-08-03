@@ -1,0 +1,18 @@
+name: Build iOS App
+on: [push]
+jobs:
+  build:
+  runs-on: macos-latest
+  steps:
+    - uses: actions/checkout@v3
+    - name: Build app
+      run: |
+        xcodebuild -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build SYMROOT=$(pwd)/build
+        mkdir Payload
+        mv build/Release-iphoneos/*.app Payload/
+        zip -r fever_free-IOS.ipa Payload
+    - name: Upload IPA
+      uses: actions/upload-artifact@v3
+      with:
+        name: fever_free-IOS
+        path: fever_free-IOS.ipa
