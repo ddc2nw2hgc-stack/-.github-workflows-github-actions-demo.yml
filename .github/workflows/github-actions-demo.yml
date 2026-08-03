@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Xcode
       run: sudo xcode-select -s /Applications/Xcode.app
@@ -24,7 +24,7 @@ jobs:
         zip -r fever_free-IOS.ipa Payload
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: fever_free-IOS-ipa
         path: fever_free-IOS.ipa
