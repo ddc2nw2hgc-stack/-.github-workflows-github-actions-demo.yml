@@ -17,10 +17,8 @@ jobs:
 
     - name: Build and Archive
       run: |
-        # Сборка проекта без подписки (для симулятора или общей компиляции)
         xcodebuild -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
         
-        # Создание структуры Payload для IPA
         mkdir Payload
         cp -R build/Release-iphoneos/*.app Payload/
         zip -r fever_free-IOS.ipa Payload
