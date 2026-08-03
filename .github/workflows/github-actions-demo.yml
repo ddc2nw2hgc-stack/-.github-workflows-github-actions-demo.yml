@@ -12,12 +12,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Unzip Xcode project
+      run: |
+        unzip fever_free_IOS.xcodeproj.zip
+
     - name: Set up Xcode
       run: sudo xcode-select -s /Applications/Xcode.app
 
     - name: Build and Archive
       run: |
-        xcodebuild -project "fever_free-IOS.xcodeproj" -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
+        xcodebuild -project "fever_free_IOS.xcodeproj" -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
         
         mkdir Payload
         cp -R build/Release-iphoneos/*.app Payload/
