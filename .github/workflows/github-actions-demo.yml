@@ -17,7 +17,6 @@ jobs:
 
     - name: Build and Archive
       run: |
-        # Замените fever_free-IOS.xcodeproj на точное имя вашего файла проекта, если оно отличается
         xcodebuild -project "fever_free-IOS.xcodeproj" -scheme "fever_free-IOS" -sdk iphoneos -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO SYMROOT=$(pwd)/build
         
         mkdir Payload
